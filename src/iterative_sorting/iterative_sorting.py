@@ -5,19 +5,27 @@ def selection_sort(arr):
         cur_index = i
         smallest_index = cur_index
         # TO-DO: find next smallest element
-        # (hint, can do in 3 loc)
-        # Your code here
-
+        for j in range(cur_index, len(arr)):
+            if arr[j] < arr[smallest_index]:
+                smallest_index = j
+            
 
         # TO-DO: swap
-        # Your code here
+        arr[i], arr[smallest_index] = arr[smallest_index], arr[i]
 
     return arr
 
 
 # TO-DO:  implement the Bubble Sort function below
 def bubble_sort(arr):
-    # Your code here
+    swaps = True
+    while swaps:
+        swaps = 0
+        for index, item in enumerate(arr):
+            if index + 1 < len(arr):
+                if arr[index + 1] < item:
+                    arr[index], arr[index + 1] = arr[index + 1], arr[index]
+                    swaps += 1
 
 
     return arr
@@ -39,8 +47,38 @@ buckets.
 
 What is the time and space complexity of the counting sort algorithm?
 '''
-def counting_sort(arr, maximum=None):
-    # Your code here
+def count_sort(array, maximum=None):
+    if array:
+        if not maximum:
+            maximum = max(array) + 1
+        size = len(array)
+        output = [0] * size
+
+        # Initialize count array
+        count = [0] * maximum
+
+        # Store the count of each elements in count array
+        for i in range(0, size):
+            if array[i] < 0:
+                return "Error, negative numbers not allowed in Count Sort"
+            count[array[i]] += 1
+
+        # Store the cummulative count
+        for i in range(1, maximum):
+            count[i] += count[i - 1]
+
+        # Find the index of each element of the original array in count array
+        # place the elements in output array
+        i = size - 1
+        while i >= 0:
+            output[count[array[i]] - 1] = array[i]
+            count[array[i]] -= 1
+            i -= 1
+
+        # Copy the sorted elements into original array
+        for i in range(0, size):
+            array[i] = abs(output[i])
 
 
-    return arr
+
+    return array
